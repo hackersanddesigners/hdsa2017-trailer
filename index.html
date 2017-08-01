@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HDSA 2017 Usage</title>
+  <meta charset="UTF-8">
+<style>
+body {
+  background: #000;
+}
+
+h1 {
+  color: #00ff00;
+  text-align: center;
+  font-size: 333px;
+}
+
+h1.red {
+  color: #ff0000;
+}
+
+</style>
+</head>
+<body>
+<h1>_</h1>
+<script>
+var red = false;
+var getUsage = function() {
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", function() {
+    var usage = JSON.parse(this.responseText);
+    console.log(usage);
+    var val = usage[0][2];
+    var h1 = document.querySelector('h1')
+    h1.innerHTML = val + 'W';
+    if(val >= 200) {
+      h1.classList.add("red");
+      if(!red) {
+        red = true;
+        var audio = new Audio('/audio');
+        audio.play();
+      } 
+    } else {
+      red = false;
+      h1.classList.remove("red");
+    }
+  });
+  oReq.open("GET", window.location.protocol + "//" + window.location.host + "/usage");
+  oReq.send();
+};
+
+(function() {
+  setInterval(function() {
+    getUsage();
+  }, 1000);
+})();
+
+</script>
+</body>
+</html>
