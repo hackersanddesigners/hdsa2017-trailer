@@ -24,6 +24,20 @@ class S(BaseHTTPRequestHandler):
       rows = c.fetchall()
       self.wfile.write(json.dumps(rows))
       return
+    elif self.path.startswith('/solar'):
+      self._set_headers()
+      global conn, c
+      c.execute('SELECT * FROM solar ORDER BY time DESC LIMIT 10')
+      rows = c.fetchall()
+      self.wfile.write(json.dumps(rows))
+      return
+    elif self.path.startswith('/battery'):
+      self._set_headers()
+      global conn, c
+      c.execute('SELECT * FROM battery ORDER BY time DESC LIMIT 10')
+      rows = c.fetchall()
+      self.wfile.write(json.dumps(rows))
+      return
     elif self.path.startswith('/audio'):
       self.send_response(200)
       self.send_header('Content-type', 'audio/wav')

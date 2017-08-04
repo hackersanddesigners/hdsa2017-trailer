@@ -77,11 +77,11 @@ class VebusClient:
     def get_battery_current(self):
         return ClientFunctions.get_single_value(self.client, 27, self.unit, 10.0, True)
 
+    def get_battery_state(self):
+        return ClientFunctions.get_single_value(self.client, 844, self.unit, 10.0, True)
+
     def get_phase_count(self):
         return ClientFunctions.get_single_value(self.client, 28, self.unit, 1, False)
-
-    def get_battery_voltage(self):
-        return ClientFunctions.get_single_value(self.client, 259, self.unit, 10.0, False)
 
     def get_pv_voltage(self):
         return ClientFunctions.get_single_value(self.client, 777, self.unit, 10.0, False)
@@ -107,7 +107,8 @@ class VebusClient:
         return VebusAlarm(ClientFunctions.get_single_value(self.client, 34, self.unit, 1, False))
 
     def get_vebus_low_battery_alarm(self):
-        return VebusAlarm(ClientFunctions.get_single_value(self.client, 35, self.unit, 1, False))
+        #return VebusAlarm(ClientFunctions.get_single_value(self.client, 35, self.unit, 1, False))
+        return ClientFunctions.get_single_value(self.client, 35, self.unit, 1, False)
 
     def get_vebus_overload_alarm(self):
         return VebusAlarm(ClientFunctions.get_single_value(self.client, 36, self.unit,  1, False))
